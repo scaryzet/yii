@@ -1,0 +1,12 @@
+Everything removed except the framework files.
+
+Stripped folders:
+
+  i18n/data - only "en" and "ru" locales left.
+  messages - only "ru" messages left.
+  views - only default and "ru" files left.
+
+Removed parts:
+
+  vendors/htmlpurifier - CFormatter, CHtmlPurifier, CMarkdown, CMarkdownParser are affected.
+  vendors/TextHighlighter - CMarkdown, CMarkdownParser, CTextHighlighter are affected.
