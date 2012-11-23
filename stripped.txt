@@ -8,5 +8,6 @@ Stripped folders:
 
 Removed parts:
 
+  gii
   vendors/htmlpurifier - CFormatter, CHtmlPurifier, CMarkdown, CMarkdownParser are affected.
   vendors/TextHighlighter - CMarkdown, CMarkdownParser, CTextHighlighter are affected.
