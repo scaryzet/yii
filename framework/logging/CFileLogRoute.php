@@ -135,15 +135,26 @@ class CFileLogRoute extends CLogRoute
 	 */
 	protected function processLogs($logs)
 	{
+		$text='';
+		foreach($logs as $log)
+			$text.=$this->formatLogMessage($log[0],$log[1],$log[2],$log[3]);
+
 		$logFile=$this->getLogPath().DIRECTORY_SEPARATOR.$this->getLogFile();
-		if(@filesize($logFile)>$this->getMaxFileSize()*1024)
-			$this->rotateFiles();
 		$fp=@fopen($logFile,'a');
 		@flock($fp,LOCK_EX);
-		foreach($logs as $log)
-			@fwrite($fp,$this->formatLogMessage($log[0],$log[1],$log[2],$log[3]));
-		@flock($fp,LOCK_UN);
-		@fclose($fp);
+		if(@filesize($logFile)>$this->getMaxFileSize()*1024)
+		{
+			$this->rotateFiles();
+			@flock($fp,LOCK_UN);
+			@fclose($fp);
+			@file_put_contents($logFile,$text,FILE_APPEND|LOCK_EX);
+		}
+		else
+		{
+			@fwrite($fp,$text);
+			@flock($fp,LOCK_UN);
+			@fclose($fp);
+		}
 	}
 
 	/**
